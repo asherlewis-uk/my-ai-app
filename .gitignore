@@ -1,4 +1,26 @@
+# OS and editor junk
 .DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+*.tmp
+*.temp
+*.bak
+*.orig
+*.rej
+*~
+
+# Local secrets and env files
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# iOS generated artifacts
 .build/
 .swiftpm/
 DerivedData/
@@ -6,8 +28,17 @@ xcuserdata/
 *.xcuserstate
 *.xcodeproj
 *.xcworkspace
-ios/NestMind/Config/Local.xcconfig
+apps/ios/NestMind/Config/Local.xcconfig
+
+# Android and general local build caches at repo root
+.gradle/
+.kotlin/
+build/
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Backend and package-manager caches
 supabase/.branches
 supabase/.temp
 node_modules/
-

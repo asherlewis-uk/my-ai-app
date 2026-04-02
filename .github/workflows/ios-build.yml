@@ -5,11 +5,15 @@ on:
   push:
     paths:
       - ".github/workflows/ios-build.yml"
-      - "ios/**"
+      - "apps/ios/**"
+      - "supabase/**"
+      - ".env.example"
   pull_request:
     paths:
       - ".github/workflows/ios-build.yml"
-      - "ios/**"
+      - "apps/ios/**"
+      - "supabase/**"
+      - ".env.example"
 
 jobs:
   build-ios-simulator:
@@ -40,14 +44,14 @@ jobs:
           xcodegen version
 
       - name: Generate Xcode project
-        working-directory: ios/NestMind
+        working-directory: apps/ios/NestMind
         shell: bash
         run: |
           set -euo pipefail
           xcodegen generate
 
       - name: Resolve Swift package dependencies
-        working-directory: ios/NestMind
+        working-directory: apps/ios/NestMind
         shell: bash
         run: |
           set -euo pipefail
@@ -57,7 +61,7 @@ jobs:
             -resolvePackageDependencies
 
       - name: Build for iOS Simulator
-        working-directory: ios/NestMind
+        working-directory: apps/ios/NestMind
         shell: bash
         run: |
           set -euo pipefail

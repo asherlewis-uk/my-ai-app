@@ -1,73 +1,65 @@
-# NestMind
+# NestMind Monorepo
 
-NestMind is a greenfield iPhone-first SwiftUI app backed by Supabase and Ollama. The current scaffold is built around a private per-user assistant with Sign in with Apple, onboarding, chat, photo input, memory review, and settings.
+NestMind is one product with two client applications that share a single backend and contract surface:
 
-The production shape is:
+- iOS in SwiftUI
+- Android in Jetpack Compose
+- Supabase Auth/Postgres/Storage/Edge Functions
+- Ollama behind the authenticated Edge Function API
 
-- iOS client -> Supabase Auth/Postgres/Storage/Edge Functions -> Ollama
-- one private assistant per signed-in user
-- household membership in the data model, but no shared memory or shared inference in v1
-
-## Current Product Surface
-
-The repo currently includes:
-
-- Sign in with Apple on iOS
-- profile onboarding and editable preferences
-- text chat
-- photo upload plus image analysis
-- memory review, feedback, edit, and delete flows
-- Supabase schema with RLS policies
-- Supabase Edge Function API that proxies Ollama server-side
-- GitHub Actions simulator build for CI
+The monorepo keeps shared contract changes, backend changes, client changes, and documentation updates in one place so they can land atomically.
 
 ## Repository Layout
 
-- `ios/NestMind`: SwiftUI application, XcodeGen project spec, tests, app config, and the canonical platform doc in [ios/NestMind/README.md](ios/NestMind/README.md)
-- `supabase/migrations`: Postgres schema and policies
-- `supabase/functions/api`: authenticated API routes used by the iOS client
-- `supabase/functions/_shared`: shared Edge Function helpers for CORS, auth, and Ollama calls
-- `.github/workflows/ios-build.yml`: macOS CI build for the iOS app
+```text
+.
+|- apps/
+|  |- ios/NestMind/           iOS app, XcodeGen project spec, tests, platform README
+|  |- android/                Android app, Gradle build, platform README
+|- supabase/                  schema, policies, storage config, Edge Functions
+|- docs/
+|  |- shared/                 canonical product, backend, architecture, and workspace docs
+|  |- ios/                    iOS-only UI and platform docs
+|  |- android/                Android-only UI docs and known drift
+|- .github/workflows/         repo CI
+|- .env.example               backend environment shape
+|- MIGRATION_SUMMARY.md       merge record and follow-up list
+```
 
-## Backend API
+## Ownership Model
 
-The iOS client is wired to these authenticated routes:
+- `docs/shared/` is the source of truth for shared product scope, backend contracts, and workspace structure.
+- `apps/ios/NestMind` is the most complete checked-in client implementation of the shared contract.
+- `apps/android` is the Android client implementation and keeps its current parity gaps documented in `docs/android/known-drift.md`.
+- `supabase/` owns the shared schema, RLS, storage policies, and the authenticated `api` Edge Function.
 
-- `GET /v1/profile`
-- `PATCH /v1/profile`
-- `GET /v1/memories`
-- `PATCH /v1/memories/:id`
-- `DELETE /v1/memories/:id`
-- `POST /v1/memories/:id/feedback`
-- `GET /v1/conversations`
-- `GET /v1/conversations/:id`
-- `POST /v1/chat`
-- `POST /v1/media/analyze`
+## Canonical Shared Contract
 
-The Edge Function entrypoint is [index.ts](supabase/functions/api/index.ts). Ollama requests are sent through [ollama.ts](supabase/functions/_shared/ollama.ts), which keeps the Ollama API key server-side only.
+Start here when changing behavior across platforms:
 
-## Data Model
+- [docs/shared/product-definition.md](docs/shared/product-definition.md)
+- [docs/shared/api-contracts.md](docs/shared/api-contracts.md)
+- [docs/shared/architecture.md](docs/shared/architecture.md)
+- [docs/shared/backend-service-boundaries.md](docs/shared/backend-service-boundaries.md)
+- [docs/shared/workspace-contract-schema.md](docs/shared/workspace-contract-schema.md)
 
-The initial schema in [20260401213000_initial_schema.sql](supabase/migrations/20260401213000_initial_schema.sql) creates:
+## Known Platform Drift
 
-- `households`
-- `household_memberships`
-- `profiles`
-- `conversations`
-- `messages`
-- `memory_entries`
-- `media_assets`
-- `memory_feedback_events`
+The current monorepo preserves documented Android drift instead of silently claiming parity.
 
-The migration also:
+The main active gaps are:
 
-- bootstraps a household and profile for each new auth user
-- enables row level security
-- restricts access so users can only manage their own profile, chats, memories, and media
+- Android still targets a non-canonical function base and route-joining shape
+- Android response models still differ from the shared camelCase contract
+- Android onboarding completion and launch-screen behavior still differ from the canonical flow
+- Android still lacks checked-in media-analysis and memory-edit support
+- Android still has no checked-in Gradle wrapper or CI workflow
+
+Use [docs/android/known-drift.md](docs/android/known-drift.md) as the authoritative drift record.
 
 ## Required Configuration
 
-### Supabase and Ollama env
+### Backend
 
 Create a local `.env` from [.env.example](.env.example) and fill in real values:
 
@@ -81,9 +73,9 @@ Create a local `.env` from [.env.example](.env.example) and fill in real values:
 - `OLLAMA_MEMORY_MODEL`
 - `OLLAMA_REQUEST_TIMEOUT_MS`
 
-### iOS app config
+### iOS
 
-Update [Secrets.xcconfig](ios/NestMind/Config/Secrets.xcconfig):
+Update [apps/ios/NestMind/Config/Secrets.xcconfig](apps/ios/NestMind/Config/Secrets.xcconfig):
 
 - `PRODUCT_BUNDLE_IDENTIFIER`
 - `DEVELOPMENT_TEAM`
@@ -91,11 +83,26 @@ Update [Secrets.xcconfig](ios/NestMind/Config/Secrets.xcconfig):
 - `SUPABASE_PUBLISHABLE_KEY`
 - `SUPABASE_FUNCTIONS_BASE_URL`
 
-The app loads these values at runtime from [AppConfig.swift](ios/NestMind/Sources/Core/Environment/AppConfig.swift).
+The app reads those values through [apps/ios/NestMind/Sources/Core/Environment/AppConfig.swift](apps/ios/NestMind/Sources/Core/Environment/AppConfig.swift).
 
-## Supabase Setup
+### Android
 
-Use the Supabase CLI against your real project:
+Create `apps/android/local.properties` with:
+
+```properties
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_ANON_KEY=your-supabase-anon-key
+SUPABASE_FUNCTIONS_BASE_URL=https://your-project.supabase.co/functions/v1/api
+```
+
+Important note:
+
+- the shared contract expects `SUPABASE_FUNCTIONS_BASE_URL` to target the deployed `api` function base
+- the current Android implementation is still out of parity here and appends `api/...` segments internally; see [docs/android/known-drift.md](docs/android/known-drift.md)
+
+## Shared Backend Setup
+
+Use the Supabase CLI from the repo root:
 
 ```bash
 supabase login
@@ -107,54 +114,24 @@ supabase functions deploy api
 
 Notes:
 
-- `SUPABASE_SERVICE_ROLE_KEY` is backend-only. Do not put it in the iOS app config.
-- The `api` function is configured with `verify_jwt = true` in [config.toml](supabase/config.toml), so client requests must include a valid Supabase access token.
-- Media uploads are stored in the `media-assets` bucket created by the migration.
+- `SUPABASE_SERVICE_ROLE_KEY` is backend-only
+- the `api` function uses `verify_jwt = true` in [supabase/config.toml](supabase/config.toml)
+- media uploads use the private `media-assets` bucket created by the migration
 
-## iOS Setup On macOS
+## Run Each Platform
 
-The project is generated from XcodeGen rather than storing a checked-in `.xcodeproj`.
-
-Prerequisites:
-
-- Xcode 16+
-- `xcodegen`
-- an Apple Developer team if you want to run on device or archive
-
-Generate and open the project:
+### iOS on macOS
 
 ```bash
-cd ios/NestMind
+cd apps/ios/NestMind
 xcodegen generate
 open NestMind.xcodeproj
 ```
 
-Then in Xcode:
-
-1. Select the `NestMind` target.
-2. Confirm the bundle identifier and team match your Apple account.
-3. Verify the Sign in with Apple capability is enabled. The entitlement already exists in [NestMind.entitlements](ios/NestMind/Resources/NestMind.entitlements).
-4. Build and run on a simulator or device.
-
-## CI Build
-
-GitHub Actions builds the app on a hosted macOS runner using [ios-build.yml](.github/workflows/ios-build.yml). The workflow:
-
-- runs on `macos-15`
-- uses `actions/checkout@v5`
-- installs `xcodegen`
-- generates the Xcode project
-- resolves Swift package dependencies
-- builds for `iphonesimulator` with `CODE_SIGNING_ALLOWED=NO`
-
-That CI path verifies compilation without requiring signing certificates.
-
-## Local Build Command
-
-If you are on macOS and only want a compile check:
+Compile-only check:
 
 ```bash
-cd ios/NestMind
+cd apps/ios/NestMind
 xcodegen generate
 xcodebuild \
   -project NestMind.xcodeproj \
@@ -165,18 +142,28 @@ xcodebuild \
   build
 ```
 
-## Current Limitations
+### Android
 
-This is a v1 scaffold, not a finished production app. The repo does not yet include:
+Open `apps/android` in Android Studio and let the project sync.
 
-- App Store signing and archive automation
-- production secrets
-- seeded onboarding content tailored to your final brand/voice
-- runtime verification against a live Supabase and Ollama environment from this Windows machine
+If a compatible local Gradle installation is available, a basic compile gate is:
 
-## Recommended Next Steps
+```bash
+gradle -p apps/android :app:assembleDebug
+```
 
-1. Push the latest workflow change and rerun CI to confirm the build stays green without the Node 20 warning.
-2. Fill real Supabase and Ollama values in `.env` and `Secrets.xcconfig`.
-3. Run the migration and deploy the `api` Edge Function.
-4. Generate the Xcode project on a Mac and test Sign in with Apple, onboarding, chat, memory, and photo upload end to end.
+Current tooling caveat:
+
+- the Android app does not include a checked-in Gradle wrapper
+- only the iOS CI workflow is currently checked in
+
+### Backend
+
+The backend is managed from the repo root with the Supabase CLI. Use the setup commands in `Shared Backend Setup` above to link, push, and deploy the shared `api` function.
+
+## Documentation Entry Points
+
+- [docs/INDEX.md](docs/INDEX.md)
+- [apps/ios/NestMind/README.md](apps/ios/NestMind/README.md)
+- [apps/android/README.md](apps/android/README.md)
+- [MIGRATION_SUMMARY.md](MIGRATION_SUMMARY.md)

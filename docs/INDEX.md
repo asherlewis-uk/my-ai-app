@@ -1,54 +1,33 @@
 # Docs Index
 
-This folder is a scope-locked documentation set for `C:\Users\asher\PROJECTS\my-ai-app`.
+This folder is the canonical documentation root for the NestMind monorepo.
 
-All content in this folder is based on the current checked-in repo state:
+Use it in this order:
 
-- `ios/NestMind` for the iOS application
-- `ios/NestMind/Config` for checked-in iOS build configuration inputs
-- `supabase/migrations` for schema and RLS
-- `supabase/functions` for the backend API layer
-- `supabase/config.toml` for backend function configuration
-- `.env.example` for backend environment variable shape
-- `.github/workflows/ios-build.yml` for CI
-- `nestmind-ios-and-android.code-workspace` for workspace shape
-
-Where the repo does not specify something, the docs call that out explicitly instead of filling gaps.
-
-## File Map
-
-- [product-definition.md](./product-definition.md): current product definition from the current iOS build and repo README
-- [mvp-scope.md](./mvp-scope.md): what is in and out of the current verified scope
-- [architecture.md](./architecture.md): system and application architecture
-- [backend-service-boundaries.md](./backend-service-boundaries.md): ownership boundaries between client, Supabase, and Ollama
-- [api-contracts.md](./api-contracts.md): authenticated application API routes and payload contracts
-- [onboarding.md](./onboarding.md): onboarding fields, gates, and save behavior
-- [swiftui-screen-map.md](./swiftui-screen-map.md): current SwiftUI screen and navigation map
-- [run-events.md](./run-events.md): runtime event flows from launch through sign-out
-- [tech-stack.md](./tech-stack.md): languages, frameworks, tooling, and infrastructure in use
-- [provider-strategy.md](./provider-strategy.md): current provider assignments and constraints
-- [project-model.md](./project-model.md): how this repo is modeled inside the workspace and what it owns
-- [workspace-contract-schema.md](./workspace-contract-schema.md): descriptive schema for the current workspace and docs contract
-- [implementation-plan.md](./implementation-plan.md): implementation status and verified next steps
+- `shared/` for product scope, backend contracts, architecture, and workspace ownership
+- `ios/` for iOS-only UI structure and platform notes
+- `android/` for Android-only UI structure and documented drift from the shared contract
 
 ## Canonical Sources
 
-For the iOS platform shape, the canonical repo-local source remains [ios/NestMind/README.md](../ios/NestMind/README.md).
+- Shared product and backend contract: [shared/product-definition.md](./shared/product-definition.md), [shared/api-contracts.md](./shared/api-contracts.md), [shared/architecture.md](./shared/architecture.md)
+- Workspace and ownership model: [shared/project-model.md](./shared/project-model.md), [shared/workspace-contract-schema.md](./shared/workspace-contract-schema.md)
+- iOS platform docs: [ios/INDEX.md](./ios/INDEX.md), [../apps/ios/NestMind/README.md](../apps/ios/NestMind/README.md)
+- Android platform docs: [android/INDEX.md](./android/INDEX.md), [../apps/android/README.md](../apps/android/README.md)
 
-For the iOS build definition and checked-in app configuration inputs, the canonical sources are:
+## File Map
 
-- [ios/NestMind/project.yml](../ios/NestMind/project.yml)
-- [ios/NestMind/Config/Debug.xcconfig](../ios/NestMind/Config/Debug.xcconfig)
-- [ios/NestMind/Config/Release.xcconfig](../ios/NestMind/Config/Release.xcconfig)
-- [ios/NestMind/Config/Secrets.xcconfig](../ios/NestMind/Config/Secrets.xcconfig)
-- [ios/NestMind/Resources/Info.plist](../ios/NestMind/Resources/Info.plist)
-- [ios/NestMind/Resources/NestMind.entitlements](../ios/NestMind/Resources/NestMind.entitlements)
-
-For backend routes and behavior, the canonical source remains [supabase/functions/api/index.ts](../supabase/functions/api/index.ts).
-
-For schema and RLS, the canonical source remains [supabase/migrations/20260401213000_initial_schema.sql](../supabase/migrations/20260401213000_initial_schema.sql).
-
-For backend runtime configuration shape, the canonical sources are:
-
-- [.env.example](../.env.example)
-- [supabase/config.toml](../supabase/config.toml)
+- [shared/product-definition.md](./shared/product-definition.md): canonical shared product definition and user model
+- [shared/mvp-scope.md](./shared/mvp-scope.md): verified shared MVP scope and explicitly out-of-scope areas
+- [shared/architecture.md](./shared/architecture.md): monorepo runtime and package architecture
+- [shared/backend-service-boundaries.md](./shared/backend-service-boundaries.md): ownership boundaries between clients, Supabase, and Ollama
+- [shared/api-contracts.md](./shared/api-contracts.md): canonical authenticated backend contract
+- [shared/onboarding.md](./shared/onboarding.md): canonical onboarding fields, gates, and save behavior
+- [shared/run-events.md](./shared/run-events.md): canonical runtime event flows and where Android currently differs
+- [shared/provider-strategy.md](./shared/provider-strategy.md): current provider assignments and platform-specific auth choices
+- [shared/tech-stack.md](./shared/tech-stack.md): current platform, backend, and tooling stack
+- [shared/project-model.md](./shared/project-model.md): monorepo ownership model and canonical source files
+- [shared/workspace-contract-schema.md](./shared/workspace-contract-schema.md): descriptive schema for the monorepo layout
+- [shared/implementation-plan.md](./shared/implementation-plan.md): realistic follow-up sequence after the merge
+- [ios/INDEX.md](./ios/INDEX.md): iOS doc entrypoint
+- [android/INDEX.md](./android/INDEX.md): Android doc entrypoint and parity docs
