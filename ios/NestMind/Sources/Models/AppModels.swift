@@ -33,6 +33,32 @@ struct ProfileDraft: Codable, Equatable {
   var summary: String
   var isOnboardingComplete: Bool
 
+  init(
+    displayName: String,
+    preferredName: String,
+    assistantTone: String,
+    supportStyle: String,
+    lifeFocusesText: String,
+    likesText: String,
+    dislikesText: String,
+    boundariesText: String,
+    onboardingAnswers: [String: String],
+    summary: String,
+    isOnboardingComplete: Bool
+  ) {
+    self.displayName = displayName
+    self.preferredName = preferredName
+    self.assistantTone = assistantTone
+    self.supportStyle = supportStyle
+    self.lifeFocusesText = lifeFocusesText
+    self.likesText = likesText
+    self.dislikesText = dislikesText
+    self.boundariesText = boundariesText
+    self.onboardingAnswers = onboardingAnswers
+    self.summary = summary
+    self.isOnboardingComplete = isOnboardingComplete
+  }
+
   static let empty = ProfileDraft(
     displayName: "",
     preferredName: "",
