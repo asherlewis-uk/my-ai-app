@@ -1,0 +1,71 @@
+name: iOS Build
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/ios-build.yml"
+      - "ios/**"
+  pull_request:
+    paths:
+      - ".github/workflows/ios-build.yml"
+      - "ios/**"
+
+jobs:
+  build-ios-simulator:
+    runs-on: macos-15
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Select Xcode 16 if present
+        shell: bash
+        run: |
+          set -euo pipefail
+          XCODE_PATH="$(ls -d /Applications/Xcode_16*.app 2>/dev/null | sort -V | tail -n 1 || true)"
+          if [[ -n "${XCODE_PATH}" ]]; then
+            sudo xcode-select -s "${XCODE_PATH}/Contents/Developer"
+          fi
+          xcodebuild -version
+
+      - name: Install XcodeGen
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v xcodegen >/dev/null 2>&1; then
+            brew install xcodegen
+          fi
+          xcodegen version
+
+      - name: Generate Xcode project
+        working-directory: ios/NestMind
+        shell: bash
+        run: |
+          set -euo pipefail
+          xcodegen generate
+
+      - name: Resolve Swift package dependencies
+        working-directory: ios/NestMind
+        shell: bash
+        run: |
+          set -euo pipefail
+          xcodebuild \
+            -project NestMind.xcodeproj \
+            -scheme NestMind \
+            -resolvePackageDependencies
+
+      - name: Build for iOS Simulator
+        working-directory: ios/NestMind
+        shell: bash
+        run: |
+          set -euo pipefail
+          xcodebuild \
+            -project NestMind.xcodeproj \
+            -scheme NestMind \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath "$RUNNER_TEMP/DerivedData" \
+            CODE_SIGNING_ALLOWED=NO \
+            build
