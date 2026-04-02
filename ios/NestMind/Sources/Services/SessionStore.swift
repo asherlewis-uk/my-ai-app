@@ -22,7 +22,7 @@ final class SessionStore {
 
   func start() async {
     guard authTask == nil else { return }
-    supabase.client.auth.startAutoRefresh()
+    await supabase.client.auth.startAutoRefresh()
 
     do {
       let currentSession = try await supabase.client.auth.session
@@ -90,4 +90,3 @@ final class SessionStore {
     accessToken = session?.accessToken
   }
 }
-

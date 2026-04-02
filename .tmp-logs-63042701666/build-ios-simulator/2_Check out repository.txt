@@ -1,0 +1,73 @@
+﻿2026-04-02T06:31:53.6577600Z ##[group]Run actions/checkout@v4
+2026-04-02T06:31:53.6578280Z with:
+2026-04-02T06:31:53.6578720Z   repository: asherlewis-uk/my-ai-app
+2026-04-02T06:31:53.6579360Z   token: ***
+2026-04-02T06:31:53.6579750Z   ssh-strict: true
+2026-04-02T06:31:53.6580060Z   ssh-user: git
+2026-04-02T06:31:53.6580360Z   persist-credentials: true
+2026-04-02T06:31:53.6580690Z   clean: true
+2026-04-02T06:31:53.6580990Z   sparse-checkout-cone-mode: true
+2026-04-02T06:31:53.6581420Z   fetch-depth: 1
+2026-04-02T06:31:53.6581740Z   fetch-tags: false
+2026-04-02T06:31:53.6582090Z   show-progress: true
+2026-04-02T06:31:53.6582390Z   lfs: false
+2026-04-02T06:31:53.6582710Z   submodules: false
+2026-04-02T06:31:53.6583010Z   set-safe-directory: true
+2026-04-02T06:31:53.6583550Z ##[endgroup]
+2026-04-02T06:31:54.1229990Z Syncing repository: asherlewis-uk/my-ai-app
+2026-04-02T06:31:54.1231940Z ##[group]Getting Git version info
+2026-04-02T06:31:54.1232470Z Working directory is '/Users/runner/work/my-ai-app/my-ai-app'
+2026-04-02T06:31:54.1247960Z [command]/opt/homebrew/bin/git version
+2026-04-02T06:31:54.2654210Z git version 2.53.0
+2026-04-02T06:31:54.2728740Z ##[endgroup]
+2026-04-02T06:31:54.2748700Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/1a01301c-4fd0-4275-a59a-d457ed902181/.gitconfig'
+2026-04-02T06:31:54.2776790Z Temporarily overriding HOME='/Users/runner/work/_temp/1a01301c-4fd0-4275-a59a-d457ed902181' before making global git config changes
+2026-04-02T06:31:54.2777930Z Adding repository directory to the temporary git global config as a safe directory
+2026-04-02T06:31:54.2784310Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/my-ai-app/my-ai-app
+2026-04-02T06:31:54.2940490Z Deleting the contents of '/Users/runner/work/my-ai-app/my-ai-app'
+2026-04-02T06:31:54.2946480Z ##[group]Initializing the repository
+2026-04-02T06:31:54.2949810Z [command]/opt/homebrew/bin/git init /Users/runner/work/my-ai-app/my-ai-app
+2026-04-02T06:31:54.3331370Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-04-02T06:31:54.3332320Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-04-02T06:31:54.3334440Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-04-02T06:31:54.3335040Z hint: call:
+2026-04-02T06:31:54.3335330Z hint:
+2026-04-02T06:31:54.3335800Z hint: 	git config --global init.defaultBranch <name>
+2026-04-02T06:31:54.3336560Z hint:
+2026-04-02T06:31:54.3336990Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-04-02T06:31:54.3337650Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-04-02T06:31:54.3338290Z hint:
+2026-04-02T06:31:54.3338600Z hint: 	git branch -m <name>
+2026-04-02T06:31:54.3338930Z hint:
+2026-04-02T06:31:54.3339660Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-04-02T06:31:54.3340460Z Initialized empty Git repository in /Users/runner/work/my-ai-app/my-ai-app/.git/
+2026-04-02T06:31:54.3362550Z [command]/opt/homebrew/bin/git remote add origin https://github.com/asherlewis-uk/my-ai-app
+2026-04-02T06:31:54.3595550Z ##[endgroup]
+2026-04-02T06:31:54.3596400Z ##[group]Disabling automatic garbage collection
+2026-04-02T06:31:54.3598080Z [command]/opt/homebrew/bin/git config --local gc.auto 0
+2026-04-02T06:31:54.3657920Z ##[endgroup]
+2026-04-02T06:31:54.3660130Z ##[group]Setting up auth
+2026-04-02T06:31:54.3661730Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-04-02T06:31:54.3784250Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-04-02T06:31:54.5459620Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-04-02T06:31:54.5540670Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-04-02T06:31:54.6692640Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-04-02T06:31:54.6770510Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-04-02T06:31:54.8063700Z [command]/opt/homebrew/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-04-02T06:31:54.8404550Z ##[endgroup]
+2026-04-02T06:31:54.8506750Z ##[group]Fetching the repository
+2026-04-02T06:31:54.8522800Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +c48acecd6cd667eb879271a2f8608869ce0e0f20:refs/remotes/origin/main
+2026-04-02T06:31:55.3731770Z From https://github.com/asherlewis-uk/my-ai-app
+2026-04-02T06:31:55.3734410Z  * [new ref]         c48acecd6cd667eb879271a2f8608869ce0e0f20 -> origin/main
+2026-04-02T06:31:55.3864600Z ##[endgroup]
+2026-04-02T06:31:55.3866610Z ##[group]Determining the checkout info
+2026-04-02T06:31:55.3867610Z ##[endgroup]
+2026-04-02T06:31:55.3868200Z [command]/opt/homebrew/bin/git sparse-checkout disable
+2026-04-02T06:31:55.3991490Z [command]/opt/homebrew/bin/git config --local --unset-all extensions.worktreeConfig
+2026-04-02T06:31:55.4120780Z ##[group]Checking out the ref
+2026-04-02T06:31:55.4122150Z [command]/opt/homebrew/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-04-02T06:31:55.4462550Z Switched to a new branch 'main'
+2026-04-02T06:31:55.4564620Z branch 'main' set up to track 'origin/main'.
+2026-04-02T06:31:55.4880300Z ##[endgroup]
+2026-04-02T06:31:55.5214640Z [command]/opt/homebrew/bin/git log -1 --format=%H
+2026-04-02T06:31:55.5319060Z c48acecd6cd667eb879271a2f8608869ce0e0f20

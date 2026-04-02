@@ -1,0 +1,66 @@
+﻿2026-04-02T06:32:06.6900630Z ##[group]Run set -euo pipefail
+2026-04-02T06:32:06.6901060Z [36;1mset -euo pipefail[0m
+2026-04-02T06:32:06.6901390Z [36;1mxcodebuild \[0m
+2026-04-02T06:32:06.6901700Z [36;1m  -project NestMind.xcodeproj \[0m
+2026-04-02T06:32:06.6901960Z [36;1m  -scheme NestMind \[0m
+2026-04-02T06:32:06.6902280Z [36;1m  -resolvePackageDependencies[0m
+2026-04-02T06:32:06.6953230Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+2026-04-02T06:32:06.6953690Z ##[endgroup]
+2026-04-02T06:32:08.2119390Z Command line invocation:
+2026-04-02T06:32:08.2122280Z     /Applications/Xcode_16.4.app/Contents/Developer/usr/bin/xcodebuild -project NestMind.xcodeproj -scheme NestMind -resolvePackageDependencies
+2026-04-02T06:32:08.2124600Z 
+2026-04-02T06:32:10.8324490Z Resolve Package Graph
+2026-04-02T06:32:11.0561230Z 
+2026-04-02T06:32:11.0894710Z Fetching from https://github.com/supabase/supabase-swift.git
+2026-04-02T06:32:12.6199580Z 
+2026-04-02T06:32:24.2983040Z Fetching from https://github.com/pointfreeco/swift-concurrency-extras
+2026-04-02T06:32:25.2589310Z 
+2026-04-02T06:32:25.2671690Z Fetching from https://github.com/pointfreeco/xctest-dynamic-overlay
+2026-04-02T06:32:25.2674290Z 
+2026-04-02T06:32:25.2687050Z Fetching from https://github.com/pointfreeco/swift-clocks
+2026-04-02T06:32:25.8183400Z 
+2026-04-02T06:32:25.8247210Z Fetching from https://github.com/apple/swift-http-types.git
+2026-04-02T06:32:25.8253270Z 
+2026-04-02T06:32:25.8253700Z Fetching from https://github.com/apple/swift-crypto.git
+2026-04-02T06:32:27.4376960Z 
+2026-04-02T06:32:33.9899660Z Fetching from https://github.com/apple/swift-asn1.git
+2026-04-02T06:32:34.5229210Z 
+2026-04-02T06:32:35.2062670Z Creating working copy of package ‘swift-crypto’
+2026-04-02T06:32:35.2693680Z 
+2026-04-02T06:32:35.2724530Z Checking out 4.3.1 of package ‘swift-crypto’
+2026-04-02T06:32:35.9014930Z 
+2026-04-02T06:32:35.9247850Z Creating working copy of package ‘xctest-dynamic-overlay’
+2026-04-02T06:32:35.9840570Z 
+2026-04-02T06:32:35.9842330Z Checking out 1.9.0 of package ‘xctest-dynamic-overlay’
+2026-04-02T06:32:36.0760060Z 
+2026-04-02T06:32:36.1065090Z Creating working copy of package ‘supabase-swift’
+2026-04-02T06:32:36.1549420Z 
+2026-04-02T06:32:36.1555150Z Checking out 2.43.0 of package ‘supabase-swift’
+2026-04-02T06:32:36.2739940Z 
+2026-04-02T06:32:36.2944430Z Creating working copy of package ‘swift-concurrency-extras’
+2026-04-02T06:32:36.3231170Z 
+2026-04-02T06:32:36.3232720Z Checking out 1.3.2 of package ‘swift-concurrency-extras’
+2026-04-02T06:32:36.3467030Z 
+2026-04-02T06:32:36.3668110Z Creating working copy of package ‘swift-clocks’
+2026-04-02T06:32:36.3935680Z 
+2026-04-02T06:32:36.3943080Z Checking out 1.0.6 of package ‘swift-clocks’
+2026-04-02T06:32:36.4199060Z 
+2026-04-02T06:32:36.4426130Z Creating working copy of package ‘swift-asn1’
+2026-04-02T06:32:36.4673200Z 
+2026-04-02T06:32:36.4675890Z Checking out 1.6.0 of package ‘swift-asn1’
+2026-04-02T06:32:36.5430770Z 
+2026-04-02T06:32:36.5635800Z Creating working copy of package ‘swift-http-types’
+2026-04-02T06:32:36.5891560Z 
+2026-04-02T06:32:36.5893070Z Checking out 1.5.1 of package ‘swift-http-types’
+2026-04-02T06:32:36.6115560Z 
+2026-04-02T06:32:39.4281820Z 
+2026-04-02T06:32:39.4282940Z Resolved source packages:
+2026-04-02T06:32:39.4286290Z   swift-concurrency-extras: https://github.com/pointfreeco/swift-concurrency-extras @ 1.3.2
+2026-04-02T06:32:39.4287200Z   xctest-dynamic-overlay: https://github.com/pointfreeco/xctest-dynamic-overlay @ 1.9.0
+2026-04-02T06:32:39.4288370Z   Supabase: https://github.com/supabase/supabase-swift.git @ 2.43.0
+2026-04-02T06:32:39.4288950Z   swift-clocks: https://github.com/pointfreeco/swift-clocks @ 1.0.6
+2026-04-02T06:32:39.4290080Z   swift-crypto: https://github.com/apple/swift-crypto.git @ 4.3.1
+2026-04-02T06:32:39.4290450Z   swift-asn1: https://github.com/apple/swift-asn1.git @ 1.6.0
+2026-04-02T06:32:39.4291290Z   swift-http-types: https://github.com/apple/swift-http-types.git @ 1.5.1
+2026-04-02T06:32:39.4292580Z 
+2026-04-02T06:32:39.4307720Z resolved source packages: swift-concurrency-extras, xctest-dynamic-overlay, Supabase, swift-clocks, swift-crypto, swift-asn1, swift-http-types
