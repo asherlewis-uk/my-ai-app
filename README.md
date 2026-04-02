@@ -23,7 +23,7 @@ The repo currently includes:
 
 ## Repository Layout
 
-- `ios/NestMind`: SwiftUI application, XcodeGen project spec, tests, and app config
+- `ios/NestMind`: SwiftUI application, XcodeGen project spec, tests, app config, and the canonical platform doc in [ios/NestMind/README.md](ios/NestMind/README.md)
 - `supabase/migrations`: Postgres schema and policies
 - `supabase/functions/api`: authenticated API routes used by the iOS client
 - `supabase/functions/_shared`: shared Edge Function helpers for CORS, auth, and Ollama calls
