@@ -1,9 +1,0 @@
-﻿2026-04-02T06:26:07.8855390Z ##[group]Run set -euo pipefail
-2026-04-02T06:26:07.8855720Z [36;1mset -euo pipefail[0m
-2026-04-02T06:26:07.8855930Z [36;1mxcodegen generate[0m
-2026-04-02T06:26:07.8898380Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
-2026-04-02T06:26:07.8898700Z ##[endgroup]
-2026-04-02T06:26:07.9484240Z ⚙️  Generating plists...
-2026-04-02T06:26:07.9484850Z ⚙️  Generating project...
-2026-04-02T06:26:07.9601000Z ⚙️  Writing project...
-2026-04-02T06:26:07.9675970Z Created project at /Users/runner/work/my-ai-app/my-ai-app/ios/NestMind/NestMind.xcodeproj
